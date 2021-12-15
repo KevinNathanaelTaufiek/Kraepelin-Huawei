@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/btn_level_easy"
+        android:layout_width="269dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:background="@drawable/bg_btn_primary"
+        android:text="Easy"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/btn_level_normal"
+        android:layout_width="269dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:background="@drawable/bg_btn_primary"
+        android:text="Normal"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/btn_level_hard"
+        android:layout_width="269dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:background="@drawable/bg_btn_primary"
+        android:text="Hard"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/btn_level_einstein"
+        android:layout_width="269dp"
+        android:layout_height="56dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:background="@drawable/bg_btn_primary"
+        android:text="Einstein"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Choose Level"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"/>
+
+</LinearLayout>

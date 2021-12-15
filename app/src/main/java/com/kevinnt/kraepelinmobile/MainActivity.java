@@ -1,0 +1,29 @@
+package com.kevinnt.kraepelinmobile;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.FrameLayout;
+
+import com.kevinnt.kraepelinmobile.menus.MainFragment;
+
+public class MainActivity extends AppCompatActivity {
+
+    public FrameLayout fl_container;
+    public Button btn_high_score;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        fl_container = findViewById(R.id.fl_container);
+        btn_high_score = findViewById(R.id.btn_high_score);
+
+        getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).addToBackStack(null).commit();
+
+    }
+}
