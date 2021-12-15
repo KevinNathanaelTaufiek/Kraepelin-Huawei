@@ -29,11 +29,12 @@ public class MainFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_layout_main_menu, container, false);
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
         btn_play = getView().findViewById(R.id.btn_play);
-        
+
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +42,6 @@ public class MainFragment extends Fragment {
                 getParentFragmentManager().beginTransaction().replace(R.id.fl_container, operatorFragment).addToBackStack(null).commit();
             }
         });
-        
+
     }
 }
