@@ -9,6 +9,22 @@
     android:background="@drawable/bg_screen"
     android:gravity="center">
 
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Hi, Andreas!"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:layout_margin="10dp"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_btn_primary"
+        />
+
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="81dp"
@@ -43,6 +59,7 @@
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
     <FrameLayout
         android:id="@+id/fl_container"

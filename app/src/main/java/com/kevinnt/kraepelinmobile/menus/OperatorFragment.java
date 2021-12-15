@@ -36,6 +36,34 @@ public class OperatorFragment extends Fragment {
         btn_multiplication_operator = getView().findViewById(R.id.btn_multiplication_operator);
         btn_division_operator = getView().findViewById(R.id.btn_division_operator);
 
+        btn_addition_operator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMenuLevel('+');
+            }
+        });
+
+        btn_subtraction_operator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMenuLevel('-');
+            }
+        });
+
+        btn_multiplication_operator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMenuLevel('*');
+            }
+        });
+
+        btn_division_operator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMenuLevel('/');
+            }
+        });
+
     }
 
     private void goMenuLevel(char operator){
