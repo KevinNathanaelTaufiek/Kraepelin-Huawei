@@ -1,12 +1,15 @@
 package com.kevinnt.kraepelinmobile;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.huawei.agconnect.api.AGConnectApi;
 import com.kevinnt.kraepelinmobile.menus.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,5 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).addToBackStack(null).commit();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        AGConnectApi.getInstance().activityLifecycle().onActivityResult(requestCode, resultCode, data);
     }
 }
