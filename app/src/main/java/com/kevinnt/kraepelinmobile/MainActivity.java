@@ -23,16 +23,17 @@ import com.huawei.hms.support.account.request.AccountAuthParamsHelper;
 import com.huawei.hms.support.account.result.AuthAccount;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.api.entity.common.CommonConstant;
+import com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton;
 import com.kevinnt.kraepelinmobile.menus.MainFragment;
 import com.kevinnt.kraepelinmobile.models.GameSets;
 
 public class MainActivity extends AppCompatActivity {
 
-    public FrameLayout fl_container;
-    public Button btn_high_score, btnLogout;
-    public TextView tvName;
-    public GameSets game_setting = new GameSets();
-    public com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
+    private FrameLayout fl_container;
+    private Button btn_high_score, btnLogout;
+    private TextView tvName;
+    private GameSets game_setting = new GameSets();
+    private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +44,12 @@ public class MainActivity extends AppCompatActivity {
         fl_container = findViewById(R.id.fl_container);
         btn_high_score = findViewById(R.id.btn_high_score);
 
-
-
         getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).commit();
 
         tvName = findViewById(R.id.tv_name);
         btnLogin = findViewById(R.id.HuaweiIdAuthButton);
         btnLogout = findViewById(R.id.HuaweiIdSignOutButton);
         btnLogout.setVisibility(View.GONE);
-
-
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "unionid:" + authAccount.getUnionId());
     }
 
-
     private void signOut() {
         Task<Void> signOutTask = mAuthService.signOut();
         signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -183,4 +179,51 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public FrameLayout getFl_container() {
+        return fl_container;
+    }
+
+    public void setFl_container(FrameLayout fl_container) {
+        this.fl_container = fl_container;
+    }
+
+    public Button getBtn_high_score() {
+        return btn_high_score;
+    }
+
+    public void setBtn_high_score(Button btn_high_score) {
+        this.btn_high_score = btn_high_score;
+    }
+
+    public Button getBtnLogout() {
+        return btnLogout;
+    }
+
+    public void setBtnLogout(Button btnLogout) {
+        this.btnLogout = btnLogout;
+    }
+
+    public TextView getTvName() {
+        return tvName;
+    }
+
+    public void setTvName(TextView tvName) {
+        this.tvName = tvName;
+    }
+
+    public GameSets getGame_setting() {
+        return game_setting;
+    }
+
+    public void setGame_setting(GameSets game_setting) {
+        this.game_setting = game_setting;
+    }
+
+    public HuaweiIdAuthButton getBtnLogin() {
+        return btnLogin;
+    }
+
+    public void setBtnLogin(HuaweiIdAuthButton btnLogin) {
+        this.btnLogin = btnLogin;
+    }
 }

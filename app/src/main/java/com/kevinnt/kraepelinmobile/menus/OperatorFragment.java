@@ -32,7 +32,7 @@ public class OperatorFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((MainActivity)context).btnLogin.setVisibility(View.GONE);
+        ((MainActivity)context).getBtnLogin().setVisibility(View.GONE);
         btn_addition_operator = getView().findViewById(R.id.tv_operator);
         btn_subtraction_operator = getView().findViewById(R.id.btn_subtraction_operator);
         btn_multiplication_operator = getView().findViewById(R.id.btn_multiplication_operator);
@@ -41,7 +41,7 @@ public class OperatorFragment extends Fragment {
         btn_addition_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).game_setting.setOperator('+');
+                ((MainActivity)context).getGame_setting().setOperator('+');
                 goMenuLevel();
             }
         });
@@ -49,7 +49,7 @@ public class OperatorFragment extends Fragment {
         btn_subtraction_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).game_setting.setOperator('-');
+                ((MainActivity)context).getGame_setting().setOperator('-');
                 goMenuLevel();
             }
         });
@@ -57,7 +57,7 @@ public class OperatorFragment extends Fragment {
         btn_multiplication_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).game_setting.setOperator('*');
+                ((MainActivity)context).getGame_setting().setOperator('*');
                 goMenuLevel();
             }
         });
@@ -65,7 +65,7 @@ public class OperatorFragment extends Fragment {
         btn_division_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).game_setting.setOperator('/');
+                ((MainActivity)context).getGame_setting().setOperator('/');
                 goMenuLevel();
             }
         });

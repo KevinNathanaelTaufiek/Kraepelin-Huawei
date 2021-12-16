@@ -13,27 +13,30 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_btn_primary"
         android:fontFamily="@font/montserrat"
+        android:padding="12dp"
         android:text="Hi, Guest!"
         android:textColor="@color/white"
         android:textSize="16dp"
-        android:layout_margin="10dp"
-        android:padding="12dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/bg_btn_primary"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/HuaweiIdSignOutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Out"
+        android:layout_margin="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_btn_logout"
+        android:padding="10dp"
+        android:text="Sign Out"
         android:textColor="@color/white"
         android:textSize="14dp"
-        android:layout_margin="10dp"
-        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,10 +82,10 @@
         android:id="@+id/fl_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
         android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="32dp"
         android:foregroundGravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/btn_high_score"
+        app:layout_constraintBottom_toBottomOf="@+id/HuaweiIdAuthButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -91,11 +94,10 @@
         android:id="@+id/HuaweiIdAuthButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_high_score"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fl_container"
-        />
+        app:layout_constraintTop_toBottomOf="@id/fl_container"/>
 
 
     <Button

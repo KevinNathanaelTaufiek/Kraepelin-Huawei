@@ -35,13 +35,13 @@ public class MainFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if(((MainActivity)context).tvName.getText().equals("Hi, Guest!")){
-            ((MainActivity)context).btnLogin.setVisibility(View.VISIBLE);
-            ((MainActivity)context).btnLogout.setVisibility(View.GONE);
+        if(((MainActivity)context).getTvName().getText().equals("Hi, Guest!")){
+            ((MainActivity)context).getBtnLogin().setVisibility(View.VISIBLE);
+            ((MainActivity)context).getBtnLogout().setVisibility(View.GONE);
         }
         else{
-            ((MainActivity)context).btnLogout.setVisibility(View.VISIBLE);
-            ((MainActivity)context).btnLogin.setVisibility(View.GONE);
+            ((MainActivity)context).getBtnLogout().setVisibility(View.VISIBLE);
+            ((MainActivity)context).getBtnLogin().setVisibility(View.GONE);
         }
 
         btn_play = getView().findViewById(R.id.btn_play);

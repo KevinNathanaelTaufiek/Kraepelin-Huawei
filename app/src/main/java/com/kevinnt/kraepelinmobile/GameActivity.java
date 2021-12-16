@@ -15,13 +15,13 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public TextView tv_score, tv_life, tv_first_operand, tv_operator, tv_second_operand;
-    public Button btn_one, btn_two, btn_three, btn_four, btn_five, btn_six, btn_seven, btn_eight, btn_nine, btn_zero;
+    private TextView tv_score, tv_life, tv_first_operand, tv_operator, tv_second_operand;
+    private Button btn_one, btn_two, btn_three, btn_four, btn_five, btn_six, btn_seven, btn_eight, btn_nine, btn_zero;
 
-    public GameSets gameSets;
-    public int score, life, scoreIncrementalValue, operandBound;
-    public int firstOperandValue, secondOperandValue;
-    public Random rand = new Random();
+    private GameSets gameSets;
+    private int score, life, scoreIncrementalValue, operandBound;
+    private int firstOperandValue, secondOperandValue;
+    private Random rand = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

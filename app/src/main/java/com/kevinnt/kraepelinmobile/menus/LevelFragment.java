@@ -43,36 +43,36 @@ public class LevelFragment extends Fragment {
         btn_level_easy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).game_setting.setLevel("easy");
-                ((MainActivity)context).game_setting.setScore(0);
-                ((MainActivity)context).game_setting.setLife(3);
+                ((MainActivity)context).getGame_setting().setLevel("easy");
+                ((MainActivity)context).getGame_setting().setScore(0);
+                ((MainActivity)context).getGame_setting().setLife(3);
                 startGame();
             }
         });
         btn_level_normal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).game_setting.setLevel("normal");
-                ((MainActivity)context).game_setting.setScore(0);
-                ((MainActivity)context).game_setting.setLife(3);
+                ((MainActivity)context).getGame_setting().setLevel("normal");
+                ((MainActivity)context).getGame_setting().setScore(0);
+                ((MainActivity)context).getGame_setting().setLife(3);
                 startGame();
             }
         });
         btn_level_hard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).game_setting.setLevel("hard");
-                ((MainActivity)context).game_setting.setScore(0);
-                ((MainActivity)context).game_setting.setLife(3);
+                ((MainActivity)context).getGame_setting().setLevel("hard");
+                ((MainActivity)context).getGame_setting().setScore(0);
+                ((MainActivity)context).getGame_setting().setLife(3);
                 startGame();
             }
         });
         btn_level_einstein.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).game_setting.setLevel("einstein");
-                ((MainActivity)context).game_setting.setScore(0);
-                ((MainActivity)context).game_setting.setLife(3);
+                ((MainActivity)context).getGame_setting().setLevel("einstein");
+                ((MainActivity)context).getGame_setting().setScore(0);
+                ((MainActivity)context).getGame_setting().setLife(3);
                 startGame();
             }
         });
@@ -81,7 +81,7 @@ public class LevelFragment extends Fragment {
 
     private void startGame() {
         Intent intent = new Intent(getActivity(), GameActivity.class);
-        intent.putExtra("gameSets", ((MainActivity)context).game_setting);
+        intent.putExtra("gameSets", ((MainActivity)context).getGame_setting());
         startActivity(intent);
     }
 
