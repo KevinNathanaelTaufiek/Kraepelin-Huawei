@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.kevinnt.kraepelinmobile.MainActivity;
 import com.kevinnt.kraepelinmobile.R;
 
 public class MainFragment extends Fragment {
@@ -33,6 +34,16 @@ public class MainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        if(((MainActivity)context).tvName.getText().equals("Hi, Guest!")){
+            ((MainActivity)context).btnLogin.setVisibility(View.VISIBLE);
+            ((MainActivity)context).btnLogout.setVisibility(View.GONE);
+        }
+        else{
+            ((MainActivity)context).btnLogout.setVisibility(View.VISIBLE);
+            ((MainActivity)context).btnLogin.setVisibility(View.GONE);
+        }
+
         btn_play = getView().findViewById(R.id.btn_play);
 
         btn_play.setOnClickListener(new View.OnClickListener() {

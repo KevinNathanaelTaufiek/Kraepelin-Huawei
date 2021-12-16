@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     public FrameLayout fl_container;
     public Button btn_high_score, btnLogout;
-    private TextView tvName;
+    public TextView tvName;
     public GameSets game_setting = new GameSets();
-    private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
+    public com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +43,17 @@ public class MainActivity extends AppCompatActivity {
         fl_container = findViewById(R.id.fl_container);
         btn_high_score = findViewById(R.id.btn_high_score);
 
-        getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).addToBackStack(null).commit();
+
+
+        getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).commit();
 
         tvName = findViewById(R.id.tv_name);
         btnLogin = findViewById(R.id.HuaweiIdAuthButton);
         btnLogout = findViewById(R.id.HuaweiIdSignOutButton);
         btnLogout.setVisibility(View.GONE);
+
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -32,6 +32,7 @@ public class OperatorFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        ((MainActivity)context).btnLogin.setVisibility(View.GONE);
         btn_addition_operator = getView().findViewById(R.id.tv_operator);
         btn_subtraction_operator = getView().findViewById(R.id.btn_subtraction_operator);
         btn_multiplication_operator = getView().findViewById(R.id.btn_multiplication_operator);
