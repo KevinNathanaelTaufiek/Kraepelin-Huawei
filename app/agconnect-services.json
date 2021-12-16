@@ -11,36 +11,36 @@
 	},
 	"client":{
 		"cp_id":"2640062000021127550",
-		"product_id":"737518067793998628",
-		"client_id":"782723797454180160",
-		"client_secret":"35713ACE77C195EC7F07791DBCC3074A8B85D59CF93B040CAA188A2490FEAF9C",
-		"project_id":"737518067793998628",
-		"app_id":"105129939",
-		"api_key":"CwEAAAAACro/RGk5cdZu++v1Egmig9saWzzVyio/29k/FNq+X0wIxqjy8DWx8FSi4wfOWeFBoaOepnvj80fe45qfgNWyHwE1cPA=",
-		"package_name":"com.kevinnt.kraepelinmobile"
+		"product_id":"737518067794000097",
+		"client_id":"783104241437787264",
+		"client_secret":"34313769352B5107E977DF9F9360D6D242E5BDCC7B1FBB54C6F952080FEE4C07",
+		"project_id":"737518067794000097",
+		"app_id":"105133719",
+		"api_key":"CwEAAAAA2UDL1fWa/IkVl5vDderpPNUPjD0T0p39CgTRd8ycmwn0RBj2jbEEkvMFuAHxXt84gVoIbQJ+qND0e4PXR1+WXhJ6zEY=",
+		"package_name":"com.kevinnt.kraepelinmobile.huawei"
 	},
 	"oauth_client":{
-		"client_id":"105129939",
+		"client_id":"105133719",
 		"client_type":1
 	},
 	"app_info":{
-		"app_id":"105129939",
-		"package_name":"com.kevinnt.kraepelinmobile"
+		"app_id":"105133719",
+		"package_name":"com.kevinnt.kraepelinmobile.huawei"
 	},
 	"configuration_version":"3.0",
 	"appInfos":[
 		{
-			"package_name":"com.kevinnt.kraepelinmobile",
+			"package_name":"com.kevinnt.kraepelinmobile.huawei",
 			"client":{
-				"app_id":"105129939"
+				"app_id":"105133719"
 			},
 			"app_info":{
-				"package_name":"com.kevinnt.kraepelinmobile",
-				"app_id":"105129939"
+				"package_name":"com.kevinnt.kraepelinmobile.huawei",
+				"app_id":"105133719"
 			},
 			"oauth_client":{
 				"client_type":1,
-				"client_id":"105129939"
+				"client_id":"105133719"
 			}
 		}
 	]
