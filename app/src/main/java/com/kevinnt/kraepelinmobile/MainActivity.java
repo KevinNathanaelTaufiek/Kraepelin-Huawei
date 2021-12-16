@@ -28,8 +28,9 @@ import com.kevinnt.kraepelinmobile.menus.MainFragment;
 public class MainActivity extends AppCompatActivity {
 
     public FrameLayout fl_container;
-    public Button btn_high_score;
+    public Button btn_high_score, btnLogout;
     private TextView tvName;
+    private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +43,25 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).addToBackStack(null).commit();
 
-
-        findViewById(R.id.HuaweiIdAuthButton).setOnClickListener(new View.OnClickListener() {
+        tvName = findViewById(R.id.tv_name);
+        btnLogin = findViewById(R.id.HuaweiIdAuthButton);
+        btnLogout = findViewById(R.id.HuaweiIdSignOutButton);
+        btnLogout.setVisibility(View.GONE);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 silentSignInByHwId();
+
             }
         });
 
-        findViewById(R.id.HuaweiIdSignOutButton).setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signOut();
-                tvName = findViewById(R.id.tv_name);
                 tvName.setText("Hi, Guest!");
+                btnLogout.setVisibility(View.GONE);
+                btnLogin.setVisibility(View.VISIBLE);
             }
         });
 
@@ -99,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(AuthAccount authAccount) {
                 // The silent sign-in is successful. Process the returned account object AuthAccount to obtain the HUAWEI ID information.
                 dealWithResultOfSignIn(authAccount);
-                tvName = findViewById(R.id.tv_name);
+                btnLogin.setVisibility(View.GONE);
+                btnLogout.setVisibility(View.VISIBLE);
                 tvName.setText(authAccount.getDisplayName());
                 //bisa masukin intent
 
