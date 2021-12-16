@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.kevinnt.kraepelinmobile.MainActivity;
 import com.kevinnt.kraepelinmobile.R;
 
 public class OperatorFragment extends Fragment {
@@ -31,7 +32,7 @@ public class OperatorFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        btn_addition_operator = getView().findViewById(R.id.btn_addition_operator);
+        btn_addition_operator = getView().findViewById(R.id.tv_operator);
         btn_subtraction_operator = getView().findViewById(R.id.btn_subtraction_operator);
         btn_multiplication_operator = getView().findViewById(R.id.btn_multiplication_operator);
         btn_division_operator = getView().findViewById(R.id.btn_division_operator);
@@ -39,34 +40,38 @@ public class OperatorFragment extends Fragment {
         btn_addition_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goMenuLevel('+');
+                ((MainActivity)context).game_setting.setOperator('+');
+                goMenuLevel();
             }
         });
 
         btn_subtraction_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goMenuLevel('-');
+                ((MainActivity)context).game_setting.setOperator('-');
+                goMenuLevel();
             }
         });
 
         btn_multiplication_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goMenuLevel('*');
+                ((MainActivity)context).game_setting.setOperator('*');
+                goMenuLevel();
             }
         });
 
         btn_division_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goMenuLevel('/');
+                ((MainActivity)context).game_setting.setOperator('/');
+                goMenuLevel();
             }
         });
 
     }
 
-    private void goMenuLevel(char operator){
+    private void goMenuLevel(){
         LevelFragment levelFragment = new LevelFragment(context);
         getParentFragmentManager().beginTransaction().replace(R.id.fl_container, levelFragment).addToBackStack(null).commit();
     }

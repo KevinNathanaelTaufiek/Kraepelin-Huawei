@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/btn_addition_operator"
+            android:id="@+id/tv_operator"
             android:layout_width="112dp"
             android:layout_height="112dp"
             android:background="@drawable/bg_btn_circle"
