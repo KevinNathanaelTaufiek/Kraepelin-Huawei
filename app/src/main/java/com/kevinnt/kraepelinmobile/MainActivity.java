@@ -24,12 +24,14 @@ import com.huawei.hms.support.account.result.AuthAccount;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.api.entity.common.CommonConstant;
 import com.kevinnt.kraepelinmobile.menus.MainFragment;
+import com.kevinnt.kraepelinmobile.models.GameSets;
 
 public class MainActivity extends AppCompatActivity {
 
     public FrameLayout fl_container;
     public Button btn_high_score, btnLogout;
     private TextView tvName;
+    public GameSets game_setting = new GameSets();
     private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
 
     @Override
