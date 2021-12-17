@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvName;
     private GameSets game_setting = new GameSets();
     private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
-    private MediaPlayer mediaPlayer;;
+    private static MediaPlayer mediaPlayer;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -277,5 +277,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void setBtnLogin(HuaweiIdAuthButton btnLogin) {
         this.btnLogin = btnLogin;
+    }
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public static void setMediaPlayer(MediaPlayer mediaPlayer) {
+        MainActivity.mediaPlayer = mediaPlayer;
     }
 }

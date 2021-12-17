@@ -38,12 +38,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
         setAnswerButton();
+        mediaPlayer = MainActivity.getMediaPlayer();
+        mediaPlayer.start();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        aboveHighScore();
+        SharedPreferences sharedPreferences = getSharedPreferences(SP, MODE_PRIVATE);
+        int highScore = sharedPreferences.getInt(HIGH_SCORE+gameSets.getOperator(),0);
+
+        if(score > highScore){
+            beatHighScore();
+            SharedPreferences.Editor spEditor = sharedPreferences.edit();
+            spEditor.putInt(HIGH_SCORE+gameSets.getOperator(),score);
+            spEditor.apply();
+            Toast.makeText(this, "Congrats you beat the High Score", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void generateQuestion(){
