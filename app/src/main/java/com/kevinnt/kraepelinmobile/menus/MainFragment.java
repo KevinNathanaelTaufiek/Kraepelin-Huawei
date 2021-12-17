@@ -18,7 +18,7 @@ import com.kevinnt.kraepelinmobile.R;
 public class MainFragment extends Fragment {
 
     public Context context;
-    public Button btn_play;
+    public Button btn_play, btn_high_score;
 
     public MainFragment(Context context) {
         this.context = context;
@@ -34,6 +34,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        btn_high_score = ((MainActivity)context).findViewById(R.id.btn_high_score);
 
         if(((MainActivity)context).getTvName().getText().equals("Hi, Guest!")){
             ((MainActivity)context).getBtnLogin().setVisibility(View.VISIBLE);
@@ -51,6 +52,13 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 OperatorFragment operatorFragment = new OperatorFragment(context);
                 getParentFragmentManager().beginTransaction().replace(R.id.fl_container, operatorFragment).addToBackStack(null).commit();
+            }
+        });
+
+        btn_high_score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(((MainActivity)context).getFl_container().getId(), new HighScoreFragment(context)).addToBackStack(null).commit();
             }
         });
 

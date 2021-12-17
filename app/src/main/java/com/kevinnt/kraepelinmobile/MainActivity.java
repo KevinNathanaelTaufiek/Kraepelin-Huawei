@@ -24,6 +24,7 @@ import com.huawei.hms.support.account.result.AuthAccount;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.api.entity.common.CommonConstant;
 import com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton;
+import com.kevinnt.kraepelinmobile.menus.HighScoreFragment;
 import com.kevinnt.kraepelinmobile.menus.MainFragment;
 import com.kevinnt.kraepelinmobile.models.GameSets;
 
@@ -50,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.HuaweiIdAuthButton);
         btnLogout = findViewById(R.id.HuaweiIdSignOutButton);
         btnLogout.setVisibility(View.GONE);
+
+        btn_high_score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new HighScoreFragment(MainActivity.this)).addToBackStack(null).commit();
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

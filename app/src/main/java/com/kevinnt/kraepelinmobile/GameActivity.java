@@ -3,6 +3,7 @@ package com.kevinnt.kraepelinmobile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,9 @@ import com.kevinnt.kraepelinmobile.models.GameSets;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String SP = "KraepelinPrefs";
+    private static final String HIGH_SCORE = "HighScore";
 
     private TextView tv_score, tv_life, tv_first_operand, tv_operator, tv_second_operand;
     private Button btn_one, btn_two, btn_three, btn_four, btn_five, btn_six, btn_seven, btn_eight, btn_nine, btn_zero;
@@ -30,7 +34,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
         setAnswerButton();
-
     }
 
     private void generateQuestion(){
@@ -85,11 +88,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         else{
             Toast.makeText(this, "Game Over", Toast.LENGTH_SHORT).show();
+            aboveHighScore();
             
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
+    }
+
+    private void aboveHighScore() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SP, MODE_PRIVATE);
+        int highScore = sharedPreferences.getInt(HIGH_SCORE+gameSets.getOperator(),0);
+
+        if(score > highScore){
+            SharedPreferences.Editor spEditor = sharedPreferences.edit();
+            spEditor.putInt(HIGH_SCORE+gameSets.getOperator(),score);
+            spEditor.apply();
+            Toast.makeText(this, "Congrats you beat the High Score", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -188,5 +205,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 answer(0);
                 break;
         }
+    }
+
+    public static String getSP() {
+        return SP;
+    }
+
+    public static String getHighScore() {
+        return HIGH_SCORE;
     }
 }
