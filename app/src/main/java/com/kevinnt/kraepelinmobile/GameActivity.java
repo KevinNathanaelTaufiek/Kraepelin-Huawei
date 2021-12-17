@@ -40,6 +40,24 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setAnswerButton();
         mediaPlayer = MainActivity.getMediaPlayer();
         mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playSong();
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer.start();
     }
 
     @Override
@@ -285,6 +303,25 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 answer(0);
                 break;
         }
+    }
+
+    private void playSong(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playSong();
+            }
+        });
     }
 
     public static String getSP() {
