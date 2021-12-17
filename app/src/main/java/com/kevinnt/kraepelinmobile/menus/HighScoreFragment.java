@@ -37,6 +37,7 @@ public class HighScoreFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        ((MainActivity)context).getBtnLogin().setVisibility(View.GONE);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(GameActivity.getSP(), Context.MODE_PRIVATE);
 
