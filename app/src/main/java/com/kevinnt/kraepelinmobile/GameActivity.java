@@ -40,6 +40,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setAnswerButton();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        aboveHighScore();
+    }
+
     private void generateQuestion(){
         firstOperandValue = rand.nextInt(operandBound)+1;
         secondOperandValue = rand.nextInt(operandBound)+1;

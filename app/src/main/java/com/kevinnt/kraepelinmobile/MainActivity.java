@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvName;
     private GameSets game_setting = new GameSets();
     private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -92,18 +92,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer.start();
+    }
+
+    @Override
     public void onBackPressed() {
+        super.onBackPressed();
         if (getSupportFragmentManager().findFragmentById(R.id.fl_container) != null) {
             getSupportFragmentManager().popBackStack();
-        }
-        else{
-            System.exit(0);
         }
     }
 
     private void playSong(){
         mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);
-
         try{
             mediaPlayer.prepare();
         }catch (IllegalStateException ex){
