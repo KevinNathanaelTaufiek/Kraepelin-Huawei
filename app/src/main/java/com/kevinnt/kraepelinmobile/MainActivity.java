@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-//import com.huawei.agconnect.api.AGConnectApi;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 //                cancelAuthorization();
 //            }
 //        });
-
     }
 
 

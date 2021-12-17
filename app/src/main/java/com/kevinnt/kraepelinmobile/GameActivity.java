@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.kevinnt.kraepelinmobile.models.GameSets;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
@@ -26,6 +28,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int score, life, scoreIncrementalValue, operandBound;
     private int firstOperandValue, secondOperandValue;
     private Random rand = new Random();
+
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +79,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         result = result%10;
 
         if(answer == result){
+            correct();
             score += scoreIncrementalValue;
             tv_score.setText("Score : "+ score);
         }
         else{
+            lifeMinus();
             life--;
             tv_life.setText("Life : "+ life);
         }
@@ -96,16 +102,71 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void correct(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.correct);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
+    }
+
+    private void lifeMinus(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.salah);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
+    }
+
+    private void gameOver(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.gameover);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
+    }
+
+    private void beatHighScore(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.waw);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
+    }
+
     private void aboveHighScore() {
 
         SharedPreferences sharedPreferences = getSharedPreferences(SP, MODE_PRIVATE);
         int highScore = sharedPreferences.getInt(HIGH_SCORE+gameSets.getOperator(),0);
 
         if(score > highScore){
+            beatHighScore();
             SharedPreferences.Editor spEditor = sharedPreferences.edit();
             spEditor.putInt(HIGH_SCORE+gameSets.getOperator(),score);
             spEditor.apply();
             Toast.makeText(this, "Congrats you beat the High Score", Toast.LENGTH_SHORT).show();
+        }else{
+            gameOver();
         }
     }
 
