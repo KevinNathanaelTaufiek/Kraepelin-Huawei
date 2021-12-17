@@ -1,0 +1,412 @@
+[1mdiff --git a/.idea/gradle.xml b/.idea/gradle.xml[m
+[1mindex 23a89bb..2c7e034 100644[m
+[1m--- a/.idea/gradle.xml[m
+[1m+++ b/.idea/gradle.xml[m
+[36m@@ -4,7 +4,7 @@[m
+   <component name="GradleSettings">[m
+     <option name="linkedExternalProjectsSettings">[m
+       <GradleProjectSettings>[m
+[31m-        <option name="testRunner" value="PLATFORM" />[m
+[32m+[m[32m        <option name="testRunner" value="GRADLE" />[m
+         <option name="distributionType" value="DEFAULT_WRAPPED" />[m
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />[m
+         <option name="gradleJvm" value="1.8" />[m
+[36m@@ -15,7 +15,6 @@[m
+           </set>[m
+         </option>[m
+         <option name="resolveModulePerSourceSet" value="false" />[m
+[31m-        <option name="useQualifiedModuleNames" value="true" />[m
+       </GradleProjectSettings>[m
+     </option>[m
+   </component>[m
+[1mdiff --git a/.idea/misc.xml b/.idea/misc.xml[m
+[1mindex 2ff8cf9..eccff6d 100644[m
+[1m--- a/.idea/misc.xml[m
+[1m+++ b/.idea/misc.xml[m
+[36m@@ -6,6 +6,7 @@[m
+         <entry key="..\:/Semester/Semester 5/Mobile Programming/HUAWEI/Kraepelin-Huawei/app/src/main/res/drawable/bg_btn_logout.xml" value="0.14322916666666666" />[m
+         <entry key="..\:/Semester/Semester 5/Mobile Programming/HUAWEI/Kraepelin-Huawei/app/src/main/res/drawable/bg_btn_primary.xml" value="0.14322916666666666" />[m
+         <entry key="..\:/Semester/Semester 5/Mobile Programming/HUAWEI/Kraepelin-Huawei/app/src/main/res/layout/activity_main.xml" value="0.1" />[m
+[32m+[m[32m        <entry key="..\:/Semester/Semester 5/Mobile Programming/HUAWEI/Kraepelin-Huawei/app/src/main/res/layout/fragment_layout_high_scores.xml" value="0.14895833333333333" />[m
+         <entry key="..\:/Semester/Semester 5/Mobile Programming/Kraepelin-Huawei/app/src/main/res/drawable/bg_btn_primary.xml" value="0.22962962962962963" />[m
+         <entry key="..\:/Semester/Semester 5/Mobile Programming/Kraepelin-Huawei/app/src/main/res/layout/activity_main.xml" value="0.2296195652173913" />[m
+         <entry key="..\:/Users/asus/AndroidStudioProjects/Kraepelin-Huawei/app/src/main/res/layout/activity_main.xml" value="0.1" />[m
+[1mdiff --git a/app/build.gradle b/app/build.gradle[m
+[1mindex a6b2c7b..e880462 100644[m
+[1m--- a/app/build.gradle[m
+[1m+++ b/app/build.gradle[m
+[36m@@ -14,6 +14,9 @@[m [mandroid {[m
+         versionName "1.0"[m
+ [m
+         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"[m
+[32m+[m
+[32m+[m[32m        //audio[m
+[32m+[m[32m        resConfigs "en", "zh-rCN"[m
+     }[m
+ [m
+     buildTypes {[m
+[36m@@ -40,6 +43,7 @@[m [mdependencies {[m
+     //implementation 'com.huawei.agconnect:agconnect-auth:1.6.2.300'[m
+     implementation 'com.huawei.hms:hwid:6.1.0.302'[m
+     implementation 'com.huawei.hms:push:5.0.4.302'[m
+[32m+[m[32m    implementation 'com.huawei.hms:audiokit-player:1.4.0.300'[m
+ }[m
+ [m
+ apply plugin: 'com.huawei.agconnect'[m
+\ No newline at end of file[m
+[1mdiff --git a/app/proguard-rules.pro b/app/proguard-rules.pro[m
+[1mindex 3d03884..228cf95 100644[m
+[1m--- a/app/proguard-rules.pro[m
+[1m+++ b/app/proguard-rules.pro[m
+[36m@@ -29,3 +29,6 @@[m
+ -keep class com.huawei.updatesdk.**{*;}[m
+ -keep class com.huawei.hms.**{*;}[m
+ [m
+[32m+[m
+[32m+[m
+[32m+[m[32m-keepattributes SourceFile,LineNumberTable[m
+[1mdiff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml[m
+[1mindex 2a2ef1e..339c648 100644[m
+[1m--- a/app/src/main/AndroidManifest.xml[m
+[1m+++ b/app/src/main/AndroidManifest.xml[m
+[36m@@ -1,5 +1,13 @@[m
+ <?xml version="1.0" encoding="utf-8"?>[m
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.kevinnt.kraepelinmobile">[m
+[32m+[m[32m    <uses-permission android:name="android.permission.INTERNET" />[m
+[32m+[m[32m    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- android4.4 To operate SD card, you need to apply for the following permissions -->[m
+[32m+[m[32m    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />[m
+[32m+[m[32m    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />[m
+[32m+[m[32m    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" /> <!-- 9.0 Adaptation -->[m
+[32m+[m[32m    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Play songs to prevent CPU from sleeping. -->[m
+[32m+[m[32m    <uses-permission android:name="android.permission.WAKE_LOCK" />[m
+[32m+[m
+     <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.KraepelinMobile">[m
+         <activity android:name=".MainActivity">[m
+             <intent-filter>[m
+[36m@@ -7,7 +15,7 @@[m
+                 <category android:name="android.intent.category.LAUNCHER" />[m
+             </intent-filter>[m
+         </activity>[m
+[31m-        <activity android:name=".GameActivity"></activity>[m
+[32m+[m[32m        <activity android:name=".GameActivity" />[m
+         <meta-data android:name="com.huawei.hms.client.channel.androidMarket" android:value="false" />[m
+     </application>[m
+     <queries>[m
+[1mdiff --git a/app/src/main/java/com/kevinnt/kraepelinmobile/MainActivity.java b/app/src/main/java/com/kevinnt/kraepelinmobile/MainActivity.java[m
+[1mindex e60717b..753a1a6 100644[m
+[1m--- a/app/src/main/java/com/kevinnt/kraepelinmobile/MainActivity.java[m
+[1m+++ b/app/src/main/java/com/kevinnt/kraepelinmobile/MainActivity.java[m
+[36m@@ -4,7 +4,9 @@[m [mimport androidx.annotation.Nullable;[m
+ import androidx.appcompat.app.AppCompatActivity;[m
+ import androidx.appcompat.app.AppCompatDelegate;[m
+ [m
+[32m+[m[32mimport android.content.Context;[m
+ import android.content.Intent;[m
+[32m+[m[32mimport android.media.MediaPlayer;[m
+ import android.os.Bundle;[m
+ import android.util.Log;[m
+ import android.view.View;[m
+[36m@@ -16,6 +18,15 @@[m [mimport android.widget.TextView;[m
+ import com.huawei.hmf.tasks.OnFailureListener;[m
+ import com.huawei.hmf.tasks.OnSuccessListener;[m
+ import com.huawei.hmf.tasks.Task;[m
+[32m+[m[32mimport com.huawei.hms.api.bean.HwAudioPlayItem;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.callback.HwAudioConfigCallBack;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.manager.HwAudioConfigManager;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.manager.HwAudioManager;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.manager.HwAudioManagerFactory;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.manager.HwAudioPlayerConfig;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.manager.HwAudioPlayerManager;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.manager.HwAudioQueueManager;[m
+[32m+[m[32mimport com.huawei.hms.audiokit.player.manager.HwAudioStatusListener;[m
+ import com.huawei.hms.common.ApiException;[m
+ import com.huawei.hms.support.account.AccountAuthManager;[m
+ import com.huawei.hms.support.account.request.AccountAuthParams;[m
+[36m@@ -28,6 +39,10 @@[m [mimport com.kevinnt.kraepelinmobile.menus.HighScoreFragment;[m
+ import com.kevinnt.kraepelinmobile.menus.MainFragment;[m
+ import com.kevinnt.kraepelinmobile.models.GameSets;[m
+ [m
+[32m+[m[32mimport java.io.IOException;[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m[32mimport java.util.List;[m
+[32m+[m
+ public class MainActivity extends AppCompatActivity {[m
+ [m
+     private FrameLayout fl_container;[m
+[36m@@ -35,6 +50,14 @@[m [mpublic class MainActivity extends AppCompatActivity {[m
+     private TextView tvName;[m
+     private GameSets game_setting = new GameSets();[m
+     private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;[m
+[32m+[m[32m    private MediaPlayer mediaPlayer;[m
+[32m+[m
+[32m+[m[32m    private Context context;[m
+[32m+[m[32m    private static final String TAG = MainActivity.class.getSimpleName();[m
+[32m+[m[32m    private HwAudioPlayerManager mHwAudioPlayerManager;[m
+[32m+[m[32m    private HwAudioConfigManager mHwAudioConfigManager;[m
+[32m+[m[32m    private HwAudioQueueManager mHwAudioQueueManager;[m
+[32m+[m[32m    List<HwAudioPlayItem> playItemList = new ArrayList<>();[m
+ [m
+     @Override[m
+     protected void onCreate(Bundle savedInstanceState) {[m
+[36m@@ -45,6 +68,14 @@[m [mpublic class MainActivity extends AppCompatActivity {[m
+         fl_container = findViewById(R.id.fl_container);[m
+         btn_high_score = findViewById(R.id.btn_high_score);[m
+ [m
+[32m+[m[32m        //playSong();[m
+[32m+[m
+[32m+[m[32m        // Set the path of an audio file in \app\src\main\res\raw of an Android Studio project.[m
+[32m+[m[32m        HwAudioPlayItem item = new HwAudioPlayItem();[m
+[32m+[m[32m        item.setFilePath("hms_res://harverstmoon");[m
+[32m+[m
+[32m+[m[32m//        createHwAudioManager();[m
+[32m+[m
+         getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).commit();[m
+ [m
+         tvName = findViewById(R.id.tv_name);[m
+[36m@@ -86,36 +117,45 @@[m [mpublic class MainActivity extends AppCompatActivity {[m
+ [m
+     }[m
+ [m
+[32m+[m[32m    private MediaPlayer mediaPlayer;[m
+[32m+[m[32m    private void playSong(){[m
+[32m+[m[32m        mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);[m
+[32m+[m
+[32m+[m[32m        try{[m
+[32m+[m[32m            mediaPlayer.prepare();[m
+[32m+[m[32m        }catch (IllegalStateException ex){[m
+[32m+[m[32m            ex.printStackTrace();[m
+[32m+[m[32m        }catch (IOException ex1){[m
+[32m+[m[32m            ex1.printStackTrace();[m
+[32m+[m[32m        }[m
+[32m+[m[32m        mediaPlayer.start();[m
+[32m+[m
+[32m+[m[32m        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {[m
+[32m+[m[32m            @Override[m
+[32m+[m[32m            public void onCompletion(MediaPlayer mp) {[m
+[32m+[m[32m                playSong();[m
+[32m+[m[32m            }[m
+[32m+[m[32m        });[m
+[32m+[m[32m    }[m
+[32m+[m
+     // AccountAuthService provides a set of APIs, including silentSignIn, getSignInIntent, and signOut.[m
+     private AccountAuthService mAuthService;[m
+ [m
+[31m-    // Set HUAWEI ID sign-in authorization parameters.[m
+     private AccountAuthParams mAuthParam;[m
+     private static final int REQUEST_CODE_SIGN_IN = 1000;[m
+[31m-    private static final String TAG = "Account";[m
+[32m+[m[32m    private static final String TAG1 = "Account";[m
+ [m
+[31m-    /**[m
+[31m-     * Silent sign-in: If a user has authorized your app and signed in, no authorization or sign-in screen will appear during subsequent sign-ins, and the user will directly sign in.[m
+[31m-     * After a successful silent sign-in, the HUAWEI ID information will be returned in the success event listener.[m
+[31m-     * If the user has not authorized your app or signed in, the silent sign-in will fail. In this case, your app will show the authorization or sign-in screen to the user.[m
+[31m-     */[m
+     private void silentSignInByHwId() {[m
+[31m-        // 1. Use AccountAuthParams to specify the user information to be obtained, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).[m
+[31m-        // 2. By default, DEFAULT_AUTH_REQUEST_PARAM specifies two items to be obtained, that is, the user ID and profile.[m
+[31m-        // 3. If your app needs to obtain the user's email address, call setEmail().[m
+         mAuthParam = new AccountAuthParamsHelper(AccountAuthParams.DEFAULT_AUTH_REQUEST_PARAM)[m
+                 .setEmail()[m
+                 .createParams();[m
+ [m
+[31m-        // Use AccountAuthParams to build AccountAuthService.[m
+         mAuthService = AccountAuthManager.getService(this, mAuthParam);[m
+[31m-[m
+[31m-        // Use silent sign-in to sign in with a HUAWEI ID.[m
+         Task<AuthAccount> task = mAuthService.silentSignIn();[m
+         task.addOnSuccessListener(new OnSuccessListener<AuthAccount>() {[m
+             @Override[m
+             public void onSuccess(AuthAccount authAccount) {[m
+[31m-                // The silent sign-in is successful. Process the returned account object AuthAccount to obtain the HUAWEI ID information.[m
+[32m+[m
+                 dealWithResultOfSignIn(authAccount);[m
+                 btnLogin.setVisibility(View.GONE);[m
+                 btnLogout.setVisibility(View.VISIBLE);[m
+[36m@@ -147,12 +187,12 @@[m [mpublic class MainActivity extends AppCompatActivity {[m
+      * @param authAccount AuthAccount object, which contains the HUAWEI ID information.[m
+      */[m
+     private void dealWithResultOfSignIn(AuthAccount authAccount) {[m
+[31m-        Log.i(TAG, "display name:" + authAccount.getDisplayName());[m
+[31m-        Log.i(TAG, "photo uri string:" + authAccount.getAvatarUriString());[m
+[31m-        Log.i(TAG, "photo uri:" + authAccount.getAvatarUri());[m
+[31m-        Log.i(TAG, "email:" + authAccount.getEmail());[m
+[31m-        Log.i(TAG, "openid:" + authAccount.getOpenId());[m
+[31m-        Log.i(TAG, "unionid:" + authAccount.getUnionId());[m
+[32m+[m[32m        Log.i(TAG1, "display name:" + authAccount.getDisplayName());[m
+[32m+[m[32m        Log.i(TAG1, "photo uri string:" + authAccount.getAvatarUriString());[m
+[32m+[m[32m        Log.i(TAG1, "photo uri:" + authAccount.getAvatarUri());[m
+[32m+[m[32m        Log.i(TAG1, "email:" + authAccount.getEmail());[m
+[32m+[m[32m        Log.i(TAG1, "openid:" + authAccount.getOpenId());[m
+[32m+[m[32m        Log.i(TAG1, "unionid:" + authAccount.getUnionId());[m
+     }[m
+ [m
+     private void signOut() {[m
+[36m@@ -160,12 +200,12 @@[m [mpublic class MainActivity extends AppCompatActivity {[m
+         signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {[m
+             @Override[m
+             public void onSuccess(Void aVoid) {[m
+[31m-                Log.i(TAG, "signOut Success");[m
+[32m+[m[32m                Log.i(TAG1, "signOut Success");[m
+             }[m
+         }).addOnFailureListener(new OnFailureListener() {[m
+             @Override[m
+             public void onFailure(Exception e) {[m
+[31m-                Log.i(TAG, "signOut fail");[m
+[32m+[m[32m                Log.i(TAG1, "signOut fail");[m
+             }[m
+         });[m
+     }[m
+[36m@@ -175,17 +215,112 @@[m [mpublic class MainActivity extends AppCompatActivity {[m
+         task.addOnSuccessListener(new OnSuccessListener<Void>() {[m
+             @Override[m
+             public void onSuccess(Void aVoid) {[m
+[31m-                Log.i(TAG, "cancelAuthorization success");[m
+[32m+[m[32m                Log.i(TAG1, "cancelAuthorization success");[m
+             }[m
+         });[m
+         task.addOnFailureListener(new OnFailureListener() {[m
+             @Override[m
+             public void onFailure(Exception e) {[m
+[31m-                Log.i(TAG, "cancelAuthorization failure:" + e.getClass().getSimpleName());[m
+[32m+[m[32m                Log.i(TAG1, "cancelAuthorization failure:" + e.getClass().getSimpleName());[m
+             }[m
+         });[m
+     }[m
+ [m
+[32m+[m[32m    //AUDIO[m
+[32m+[m[32m    public void createHwAudioManager() {[m
+[32m+[m[32m        // Create a configuration instance, including various playback-related configurations. The parameter context cannot be left empty.[m
+[32m+[m[32m        HwAudioPlayerConfig hwAudioPlayerConfig = new HwAudioPlayerConfig(context);[m
+[32m+[m[32m        // Add configurations required for creating an HwAudioManager object.[m
+[32m+[m[32m        hwAudioPlayerConfig.setDebugMode(true).setDebugPath("").setPlayCacheSize(20);[m
+[32m+[m[32m        // Create management instances.[m
+[32m+[m[32m        HwAudioManagerFactory.createHwAudioManager(hwAudioPlayerConfig, new HwAudioConfigCallBack() {[m
+[32m+[m[32m            // Return the management instance through callback.[m
+[32m+[m[32m            @Override[m
+[32m+[m[32m            public void onSuccess(HwAudioManager hwAudioManager) {[m
+[32m+[m[32m                try {[m
+[32m+[m[32m                    Log.i(TAG, "createHwAudioManager onSuccess");[m
+[32m+[m[32m                    // Obtain the playback control instance.[m
+[32m+[m[32m                    mHwAudioPlayerManager = hwAudioManager.getPlayerManager();[m
+[32m+[m[32m                    //obtain the configuration management instance[m
+[32m+[m[32m                    mHwAudioConfigManager = hwAudioManager.getConfigManager();[m
+[32m+[m[32m                    //obtain the queue management instance[m
+[32m+[m[32m                    mHwAudioQueueManager = hwAudioManager.getQueueManager();[m
+[32m+[m[32m                    // get the play list of audio using and play the play list of audios.[m
+[32m+[m[32m                    mHwAudioPlayerManager.playList(getRawItemList(), 0, 0);[m
+[32m+[m[32m                    hwAudioManager.addPlayerStatusListener(mPlayListener);[m
+[32m+[m[32m                } catch (Exception e) {[m
+[32m+[m[32m                    Log.i(TAG, "player init fail");[m
+[32m+[m[32m                }[m
+[32m+[m[32m            }[m
+[32m+[m[32m            @Override[m
+[32m+[m[32m            public void onError(int errorCode) {[m
+[32m+[m[32m                Log.w(TAG, "init err:" + errorCode);[m
+[32m+[m[32m            }[m
+[32m+[m[32m        });[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    HwAudioPlayItem item= new HwAudioPlayItem();[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    public List<HwAudioPlayItem> getRawItemList(){[m
+[32m+[m[32m        //set the online audio URL[m
+[32m+[m[32m        //create an audio object and write audio information into the object[m
+[32m+[m[32m        HwAudioPlayItem item= new HwAudioPlayItem();[m
+[32m+[m[32m        //set audio title[m
+[32m+[m[32m        item.setAudioTitle("Playing raw song");[m
+[32m+[m[32m        //pass the local audio path[m
+[32m+[m[32m        item.setFilePath("hms_res://harverstmoon");[m
+[32m+[m[32m        playItemList.add(item);[m
+[32m+[m[32m        return playItemList;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    private HwAudioStatusListener mPlayListener = new HwAudioStatusListener() {[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        public void onSongChange(HwAudioPlayItem hwAudioPlayItem) {[m
+[32m+[m[32m            //called upon audio changes[m
+[32m+[m[32m            Log.d("onSongChange", ""+hwAudioPlayItem.getDuration());[m
+[32m+[m[32m            Log.d("onSongChange", ""+hwAudioPlayItem.getAudioTitle());[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        public void onQueueChanged(List<HwAudioPlayItem> list) {[m
+[32m+[m[32m            //call upon queue change[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        public void onBufferProgress(int percent) {[m
+[32m+[m[32m            //called upon bufferiung progress changes[m
+[32m+[m[32m            Log.d("onBufferProgress", ""+percent);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        public void onPlayProgress(long currPos, long duration) {[m
+[32m+[m[32m            //call upon playback progress change[m
+[32m+[m[32m            Log.d("onBufferingChange", ""+currPos);[m
+[32m+[m[32m            Log.d("onBufferingChange", ""+duration);[m
+[32m+[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        public void onPlayCompleted(boolean isStopped) {[m
+[32m+[m[32m            //call upon playback finishing[m
+[32m+[m[32m            //play.setText("Play");[m
+[32m+[m[32m            //playItemList.clear();[m
+[32m+[m[32m            //playItemList.removeAll(playItemList)[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        public void onPlayError(int errorCode, boolean isUserForcePlay) {[m
+[32m+[m[32m            //call upon a playback error[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        @Override[m
+[32m+[m[32m        public void onPlayStateChange(boolean b, boolean b1) {[m
+[32m+[m[32m            //called upon playback status changes[m
+[32m+[m[32m        }[m
+[32m+[m[32m    };[m
+[32m+[m
+ [m
+     public FrameLayout getFl_container() {[m
+         return fl_container;[m
+[1mdiff --git a/app/src/main/java/com/kevinnt/kraepelinmobile/menus/HighScoreFragment.java b/app/src/main/java/com/kevinnt/kraepelinmobile/menus/HighScoreFragment.java[m
+[1mindex 07d96d1..d198bfa 100644[m
+[1m--- a/app/src/main/java/com/kevinnt/kraepelinmobile/menus/HighScoreFragment.java[m
+[1m+++ b/app/src/main/java/com/kevinnt/kraepelinmobile/menus/HighScoreFragment.java[m
+[36m@@ -31,6 +31,7 @@[m [mpublic class HighScoreFragment extends Fragment {[m
+     @Nullable[m
+     @Override[m
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {[m
+[32m+[m
+         return inflater.inflate(R.layout.fragment_layout_high_scores, container, false);[m
+     }[m
+ [m
+[36m@@ -65,6 +66,7 @@[m [mpublic class HighScoreFragment extends Fragment {[m
+             @Override[m
+             public void onClick(View v) {[m
+                 btn_high_score.setText("High Score");[m
+[32m+[m
+                 getParentFragmentManager().beginTransaction().replace(((MainActivity)context).getFl_container().getId(), new MainFragment(context)).commit();[m
+ [m
+             }[m
+[1mdiff --git a/app/src/main/res/raw/harverstmoon.mp3 b/app/src/main/res/raw/harverstmoon.mp3[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1d023cb[m
+Binary files /dev/null and b/app/src/main/res/raw/harverstmoon.mp3 differ
+[1mdiff --git a/build.gradle b/build.gradle[m
+[1mindex 96237e3..2c8030e 100644[m
+[1m--- a/build.gradle[m
+[1m+++ b/build.gradle[m
+[36m@@ -10,6 +10,9 @@[m [mbuildscript {[m
+         classpath 'com.huawei.agconnect:agcp:1.5.2.300'[m
+         // NOTE: Do not place your application dependencies here; they belong[m
+         // in the individual module build.gradle files[m
+[32m+[m
+[32m+[m[32m//        //audio kit[m
+[32m+[m[32m//        classpath 'com.android.tools.build:gradle:3.4.2'[m
+     }[m
+ }[m
+ [m
