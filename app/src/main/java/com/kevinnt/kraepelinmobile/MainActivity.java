@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,8 @@ import com.kevinnt.kraepelinmobile.menus.HighScoreFragment;
 import com.kevinnt.kraepelinmobile.menus.MainFragment;
 import com.kevinnt.kraepelinmobile.models.GameSets;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout fl_container;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvName;
     private GameSets game_setting = new GameSets();
     private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
-
+    private MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         fl_container = findViewById(R.id.fl_container);
         btn_high_score = findViewById(R.id.btn_high_score);
+
+        playSong();
 
         getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).commit();
 
@@ -84,6 +89,27 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
+
+
+    private void playSong(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playSong();
+            }
+        });
     }
 
     // AccountAuthService provides a set of APIs, including silentSignIn, getSignInIntent, and signOut.
