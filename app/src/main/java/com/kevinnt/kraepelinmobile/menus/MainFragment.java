@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.kevinnt.kraepelinmobile.MainActivity;
 import com.kevinnt.kraepelinmobile.R;
@@ -35,6 +36,12 @@ public class MainFragment extends Fragment {
     public void onStart() {
         super.onStart();
         btn_high_score = ((MainActivity)context).findViewById(R.id.btn_high_score);
+        btn_high_score.setText("High Score");
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
 
         if(((MainActivity)context).getTvName().getText().equals("Hi, Guest!")){
             ((MainActivity)context).getBtnLogin().setVisibility(View.VISIBLE);
@@ -62,5 +69,17 @@ public class MainFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        btn_high_score.setText("High Score");
+        btn_high_score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(R.id.fl_container, new HighScoreFragment(context)).addToBackStack(null).commit();
+            }
+        });
     }
 }

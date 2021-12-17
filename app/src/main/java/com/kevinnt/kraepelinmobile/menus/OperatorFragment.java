@@ -77,4 +77,16 @@ public class OperatorFragment extends Fragment {
         getParentFragmentManager().beginTransaction().replace(R.id.fl_container, levelFragment).addToBackStack(null).commit();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)context).getBtn_high_score().setText("High Score");
+        ((MainActivity)context).getBtn_high_score().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(R.id.fl_container, new HighScoreFragment(context)).addToBackStack(null).commit();
+            }
+        });
+    }
+
 }

@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
         fl_container = findViewById(R.id.fl_container);
         btn_high_score = findViewById(R.id.btn_high_score);
 
-        playSong();
+        if(getIntent().getBooleanExtra("MusicPlayed", true)){
+            playSong();
+        }
 
         getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).commit();
 
@@ -91,6 +93,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentById(R.id.fl_container) != null) {
+            getSupportFragmentManager().popBackStack();
+        }
+        else{
+            System.exit(0);
+        }
+    }
 
     private void playSong(){
         mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);

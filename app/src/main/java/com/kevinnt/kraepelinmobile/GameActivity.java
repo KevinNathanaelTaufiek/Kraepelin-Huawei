@@ -91,6 +91,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             aboveHighScore();
             
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("MusicPlayed",false);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
 

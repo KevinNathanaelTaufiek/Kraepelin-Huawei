@@ -85,4 +85,15 @@ public class LevelFragment extends Fragment {
         startActivity(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity)context).getBtn_high_score().setText("High Score");
+        ((MainActivity)context).getBtn_high_score().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(R.id.fl_container, new HighScoreFragment(context)).addToBackStack(null).commit();
+            }
+        });
+    }
 }
