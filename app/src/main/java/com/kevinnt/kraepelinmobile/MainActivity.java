@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private static GameSets game_setting = new GameSets();
     private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
     private static MediaPlayer mediaPlayer;
+    private SharedPreferences sharedPreferences;
+    private final String HW_USERNAME = "USERNAME";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         fl_container = findViewById(R.id.fl_container);
         btn_high_score = findViewById(R.id.btn_high_score);
+        sharedPreferences = getSharedPreferences(GameActivity.getSP(), MODE_PRIVATE);
 
         if(getIntent().getBooleanExtra("MusicPlayed", true)){
             mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);
@@ -91,13 +96,22 @@ public class MainActivity extends AppCompatActivity {
                 btnLogin.setVisibility(View.VISIBLE);
             }
         });
-
+        silentSignInByHwId();
+        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
+        tvName.setText(username);
 //        findViewById(R.id.HuaweiIdCancelAuthButton).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                cancelAuthorization();
 //            }
 //        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
+        tvName.setText(username);
     }
 
     private void clickBtn(){
@@ -115,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mediaPlayer.start();
+        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
+        tvName.setText(username);
     }
 
     @Override
@@ -170,6 +186,9 @@ public class MainActivity extends AppCompatActivity {
                 btnLogin.setVisibility(View.GONE);
                 btnLogout.setVisibility(View.VISIBLE);
                 tvName.setText(authAccount.getDisplayName());
+                SharedPreferences.Editor spEditor = sharedPreferences.edit();
+                spEditor.putString(HW_USERNAME,authAccount.getDisplayName());
+                spEditor.apply();
                 dealWithResultOfSignIn(authAccount);
             }
         });
@@ -218,6 +237,11 @@ public class MainActivity extends AppCompatActivity {
                 btnLogin.setVisibility(View.GONE);
                 btnLogout.setVisibility(View.VISIBLE);
                 tvName.setText(authAccount.getDisplayName());
+
+                SharedPreferences.Editor spEditor = sharedPreferences.edit();
+                spEditor.putString(HW_USERNAME,authAccount.getDisplayName());
+                spEditor.apply();
+
                 Log.i(TAG, "onActivitResult of sigInInIntent, request code: " + REQUEST_CODE_SIGN_IN);
             } else {
                 // The sign-in fails. Find the failure cause from the status code. For more information, please refer to Error Codes.
