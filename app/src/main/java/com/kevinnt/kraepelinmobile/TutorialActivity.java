@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -14,8 +17,9 @@ public class TutorialActivity extends AppCompatActivity {
 
     private androidx.constraintlayout.widget.ConstraintLayout screen;
     private MediaPlayer mediaPlayer;
-
-
+    private TextView tap;
+    private Animation fadeIn,fadeOut;
+    private Boolean fadeflag=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +28,15 @@ public class TutorialActivity extends AppCompatActivity {
         screen = findViewById(R.id.screen);
         mediaPlayer = MainActivity.getMediaPlayer();
         mediaPlayer.start();
+
+        tap = findViewById(R.id.tv_tap);
+        fadeIn = new AlphaAnimation(0.0f, 1.0f);
+        fadeIn.setDuration(1200);
+        fadeIn.setFillAfter(true);
+
+        fadeOut = new AlphaAnimation(1.0f,0.0f);
+        fadeOut.setDuration(1200);
+        fadeIn.setFillAfter(true);
 
         screen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +47,14 @@ public class TutorialActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (fadeflag) {
+            tap.startAnimation(fadeIn);
+            fadeflag = false;
+        } else {
+            tap.startAnimation(fadeOut);
+            fadeflag = true;
+        }
     }
 
     @Override
@@ -58,14 +79,6 @@ public class TutorialActivity extends AppCompatActivity {
 
     private void clickBtn(){
         mediaPlayer = MediaPlayer.create(this, R.raw.click);
-
-        try{
-            mediaPlayer.prepare();
-        }catch (IllegalStateException ex){
-            ex.printStackTrace();
-        }catch (IOException ex1){
-            ex1.printStackTrace();
-        }
         mediaPlayer.start();
     }
 }

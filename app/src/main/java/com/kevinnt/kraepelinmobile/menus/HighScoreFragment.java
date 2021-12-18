@@ -79,14 +79,6 @@ public class HighScoreFragment extends Fragment {
 
     private void clickBtn(){
         mediaPlayer = MediaPlayer.create(context, R.raw.click);
-
-        try{
-            mediaPlayer.prepare();
-        }catch (IllegalStateException ex){
-            ex.printStackTrace();
-        }catch (IOException ex1){
-            ex1.printStackTrace();
-        }
         mediaPlayer.start();
     }
 

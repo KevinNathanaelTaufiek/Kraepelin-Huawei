@@ -91,6 +91,7 @@ public class OperatorFragment extends Fragment {
         ((MainActivity)context).getBtn_high_score().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickBtn();
                 getParentFragmentManager().beginTransaction().replace(R.id.fl_container, new HighScoreFragment(context)).addToBackStack(null).commit();
             }
         });
@@ -98,14 +99,6 @@ public class OperatorFragment extends Fragment {
 
     private void clickBtn(){
         mediaPlayer = MediaPlayer.create(context, R.raw.click);
-
-        try{
-            mediaPlayer.prepare();
-        }catch (IllegalStateException ex){
-            ex.printStackTrace();
-        }catch (IOException ex1){
-            ex1.printStackTrace();
-        }
         mediaPlayer.start();
     }
 
