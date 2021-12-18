@@ -204,6 +204,28 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "unionid:" + authAccount.getUnionId());
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            Log.i(TAG, "onActivitResult of sigInInIntent, request code: " + REQUEST_CODE_SIGN_IN);
+            Task<AuthAccount> authAccountTask = AccountAuthManager.parseAuthResultFromIntent(data);
+            if (authAccountTask.isSuccessful()) {
+                // The sign-in is successful, and the authAccount object that contains the HUAWEI ID information is obtained.
+                AuthAccount authAccount = authAccountTask.getResult();
+                dealWithResultOfSignIn(authAccount);
+
+                btnLogin.setVisibility(View.GONE);
+                btnLogout.setVisibility(View.VISIBLE);
+                tvName.setText(authAccount.getDisplayName());
+                Log.i(TAG, "onActivitResult of sigInInIntent, request code: " + REQUEST_CODE_SIGN_IN);
+            } else {
+                // The sign-in fails. Find the failure cause from the status code. For more information, please refer to Error Codes.
+                Log.e(TAG, "sign in failed : " +((ApiException)authAccountTask.getException()).getStatusCode());
+            }
+        }
+    }
+
     private void signOut() {
         Task<Void> signOutTask = mAuthService.signOut();
         signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
