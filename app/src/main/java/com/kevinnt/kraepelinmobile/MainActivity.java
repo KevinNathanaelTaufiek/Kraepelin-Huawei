@@ -48,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         btn_high_score = findViewById(R.id.btn_high_score);
 
         if(getIntent().getBooleanExtra("MusicPlayed", true)){
+            mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);
+            try{
+                mediaPlayer.prepare();
+            }catch (IllegalStateException ex){
+                ex.printStackTrace();
+            }catch (IOException ex1){
+                ex1.printStackTrace();
+            }
             playSong();
         }
 
@@ -93,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clickBtn(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.click);
-        mediaPlayer.start();
+        MediaPlayer cb =  MediaPlayer.create(this, R.raw.click);
+        cb.start();
     }
 
     @Override
@@ -118,14 +126,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void playSong(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);
-        try{
-            mediaPlayer.prepare();
-        }catch (IllegalStateException ex){
-            ex.printStackTrace();
-        }catch (IOException ex1){
-            ex1.printStackTrace();
-        }
+
         mediaPlayer.start();
 
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -166,12 +167,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthAccount authAccount) {
                 // The silent sign-in is successful. Process the returned account object AuthAccount to obtain the HUAWEI ID information.
-                dealWithResultOfSignIn(authAccount);
                 btnLogin.setVisibility(View.GONE);
                 btnLogout.setVisibility(View.VISIBLE);
                 tvName.setText(authAccount.getDisplayName());
-                //bisa masukin intent
-
+                dealWithResultOfSignIn(authAccount);
             }
         });
         task.addOnFailureListener(new OnFailureListener() {

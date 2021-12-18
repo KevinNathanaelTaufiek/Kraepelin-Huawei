@@ -88,8 +88,8 @@ public class LevelFragment extends Fragment {
     }
 
     private void clickBtn(){
-        mediaPlayer = MediaPlayer.create(context, R.raw.click);
-        mediaPlayer.start();
+        MediaPlayer cb =  MediaPlayer.create(context, R.raw.click);
+        cb.start();
     }
 
     private void info(){
@@ -100,7 +100,6 @@ public class LevelFragment extends Fragment {
     private void startGame() {
         info();
         Intent intent = new Intent(getActivity(), TutorialActivity.class);
-        intent.putExtra("gameSets", ((MainActivity)context).getGame_setting());
         startActivity(intent);
     }
 

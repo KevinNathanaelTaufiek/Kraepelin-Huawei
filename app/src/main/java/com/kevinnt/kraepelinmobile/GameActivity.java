@@ -40,12 +40,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setAnswerButton();
         mediaPlayer = MainActivity.getMediaPlayer();
         mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                playSong();
-            }
-        });
     }
 
     @Override
@@ -144,55 +138,54 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void correct(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.correct);
+        MediaPlayer cc =  MediaPlayer.create(this, R.raw.correct);
 
         try{
-            mediaPlayer.prepare();
+            cc.prepare();
         }catch (IllegalStateException ex){
             ex.printStackTrace();
         }catch (IOException ex1){
             ex1.printStackTrace();
         }
-        mediaPlayer.start();
+        cc.start();
     }
 
     private void lifeMinus(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.salah);
+        MediaPlayer lm =  MediaPlayer.create(this, R.raw.salah);
 
         try{
-            mediaPlayer.prepare();
+            lm.prepare();
         }catch (IllegalStateException ex){
             ex.printStackTrace();
         }catch (IOException ex1){
             ex1.printStackTrace();
         }
-        mediaPlayer.start();
+        lm.start();
     }
 
     private void gameOver(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.gameover);
+        MediaPlayer go = MediaPlayer.create(this, R.raw.gameover);
 
         try{
-            mediaPlayer.prepare();
+            go.prepare();
         }catch (IllegalStateException ex){
             ex.printStackTrace();
         }catch (IOException ex1){
             ex1.printStackTrace();
         }
-        mediaPlayer.start();
+        go.start();
     }
 
     private void beatHighScore(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.waw);
-
+        MediaPlayer waw = MediaPlayer.create(this, R.raw.waw);
         try{
-            mediaPlayer.prepare();
+            waw.prepare();
         }catch (IllegalStateException ex){
             ex.printStackTrace();
         }catch (IOException ex1){
             ex1.printStackTrace();
         }
-        mediaPlayer.start();
+        waw.start();
     }
 
     private void aboveHighScore() {
@@ -307,25 +300,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 answer(0);
                 break;
         }
-    }
-
-    private void playSong(){
-        mediaPlayer = MediaPlayer.create(this, R.raw.harverstmoon);
-        try{
-            mediaPlayer.prepare();
-        }catch (IllegalStateException ex){
-            ex.printStackTrace();
-        }catch (IOException ex1){
-            ex1.printStackTrace();
-        }
-        mediaPlayer.start();
-
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                playSong();
-            }
-        });
     }
 
     public static String getSP() {

@@ -98,8 +98,8 @@ public class OperatorFragment extends Fragment {
     }
 
     private void clickBtn(){
-        mediaPlayer = MediaPlayer.create(context, R.raw.click);
-        mediaPlayer.start();
+        MediaPlayer cb =  MediaPlayer.create(context, R.raw.click);
+        cb.start();
     }
 
 }
