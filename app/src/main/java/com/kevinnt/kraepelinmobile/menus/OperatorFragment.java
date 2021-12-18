@@ -1,6 +1,7 @@
 package com.kevinnt.kraepelinmobile.menus;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,13 @@ import androidx.fragment.app.Fragment;
 import com.kevinnt.kraepelinmobile.MainActivity;
 import com.kevinnt.kraepelinmobile.R;
 
+import java.io.IOException;
+
 public class OperatorFragment extends Fragment {
 
     public Context context;
     public Button btn_addition_operator, btn_subtraction_operator, btn_multiplication_operator, btn_division_operator;
-
+    private MediaPlayer mediaPlayer;
     public OperatorFragment(Context context) {
         this.context = context;
     }
@@ -41,6 +44,7 @@ public class OperatorFragment extends Fragment {
         btn_addition_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clickBtn();
                 ((MainActivity)context).getGame_setting().setOperator('+');
                 goMenuLevel();
             }
@@ -49,6 +53,7 @@ public class OperatorFragment extends Fragment {
         btn_subtraction_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clickBtn();
                 ((MainActivity)context).getGame_setting().setOperator('-');
                 goMenuLevel();
             }
@@ -57,6 +62,7 @@ public class OperatorFragment extends Fragment {
         btn_multiplication_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clickBtn();
                 ((MainActivity)context).getGame_setting().setOperator('*');
                 goMenuLevel();
             }
@@ -65,6 +71,7 @@ public class OperatorFragment extends Fragment {
         btn_division_operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clickBtn();
                 ((MainActivity)context).getGame_setting().setOperator('/');
                 goMenuLevel();
             }
@@ -87,6 +94,19 @@ public class OperatorFragment extends Fragment {
                 getParentFragmentManager().beginTransaction().replace(R.id.fl_container, new HighScoreFragment(context)).addToBackStack(null).commit();
             }
         });
+    }
+
+    private void clickBtn(){
+        mediaPlayer = MediaPlayer.create(context, R.raw.click);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
     }
 
 }

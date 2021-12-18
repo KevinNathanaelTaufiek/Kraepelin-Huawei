@@ -73,6 +73,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             spEditor.apply();
             Toast.makeText(this, "Congrats you beat the High Score", Toast.LENGTH_SHORT).show();
         }
+        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+        intent.putExtra("MusicPlayed",false);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void generateQuestion(){

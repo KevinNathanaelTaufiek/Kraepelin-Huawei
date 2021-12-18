@@ -3,6 +3,7 @@ package com.kevinnt.kraepelinmobile.menus;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,14 @@ import com.kevinnt.kraepelinmobile.GameActivity;
 import com.kevinnt.kraepelinmobile.MainActivity;
 import com.kevinnt.kraepelinmobile.R;
 
+import java.io.IOException;
+
 public class HighScoreFragment extends Fragment {
 
     private Context context;
     private TextView tv_high_score_addition, tv_high_score_subtraction, tv_high_score_multiplication, tv_high_score_division;
     private Button btn_high_score;
+    private MediaPlayer mediaPlayer;
 
     public HighScoreFragment(Context context) {
         this.context = context;
@@ -65,11 +69,25 @@ public class HighScoreFragment extends Fragment {
         btn_high_score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickBtn();
                 btn_high_score.setText("High Score");
                 getParentFragmentManager().beginTransaction().replace(((MainActivity)context).getFl_container().getId(), new MainFragment(context)).commit();
 
             }
         });
+    }
+
+    private void clickBtn(){
+        mediaPlayer = MediaPlayer.create(context, R.raw.click);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
     }
 
 }

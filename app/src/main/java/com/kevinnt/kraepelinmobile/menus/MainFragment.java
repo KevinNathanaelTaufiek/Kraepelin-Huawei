@@ -1,6 +1,7 @@
 package com.kevinnt.kraepelinmobile.menus;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +17,13 @@ import androidx.fragment.app.FragmentManager;
 import com.kevinnt.kraepelinmobile.MainActivity;
 import com.kevinnt.kraepelinmobile.R;
 
+import java.io.IOException;
+
 public class MainFragment extends Fragment {
 
     public Context context;
     public Button btn_play, btn_high_score;
-
+    private MediaPlayer mediaPlayer;
     public MainFragment(Context context) {
         this.context = context;
     }
@@ -57,6 +60,7 @@ public class MainFragment extends Fragment {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickBtn();
                 OperatorFragment operatorFragment = new OperatorFragment(context);
                 getParentFragmentManager().beginTransaction().replace(R.id.fl_container, operatorFragment).addToBackStack(null).commit();
             }
@@ -69,6 +73,19 @@ public class MainFragment extends Fragment {
             }
         });
 
+    }
+
+    private void clickBtn(){
+        mediaPlayer = MediaPlayer.create(context, R.raw.click);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
     }
 
     @Override

@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout fl_container;
     private Button btn_high_score, btnLogout;
     private TextView tvName;
-    private GameSets game_setting = new GameSets();
+    private static GameSets game_setting = new GameSets();
     private com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton btnLogin;
-    private static MediaPlayer mediaPlayer;;
+    private static MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btn_high_score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickBtn();
                 getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new HighScoreFragment(MainActivity.this)).addToBackStack(null).commit();
             }
         });
@@ -89,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
 //                cancelAuthorization();
 //            }
 //        });
+    }
+
+    private void clickBtn(){
+        mediaPlayer = MediaPlayer.create(this, R.raw.click);
+
+        try{
+            mediaPlayer.prepare();
+        }catch (IllegalStateException ex){
+            ex.printStackTrace();
+        }catch (IOException ex1){
+            ex1.printStackTrace();
+        }
+        mediaPlayer.start();
     }
 
     @Override
@@ -263,12 +277,12 @@ public class MainActivity extends AppCompatActivity {
         this.tvName = tvName;
     }
 
-    public GameSets getGame_setting() {
+    public static GameSets getGame_setting() {
         return game_setting;
     }
 
-    public void setGame_setting(GameSets game_setting) {
-        this.game_setting = game_setting;
+    public static void setGame_setting(GameSets game_setting) {
+        MainActivity.game_setting = game_setting;
     }
 
     public HuaweiIdAuthButton getBtnLogin() {
