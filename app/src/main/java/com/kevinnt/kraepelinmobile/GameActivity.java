@@ -1,6 +1,7 @@
 package com.kevinnt.kraepelinmobile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,9 +9,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.huawei.hms.ads.AdParam;
+import com.huawei.hms.ads.BannerAdSize;
+import com.huawei.hms.ads.HwAds;
+import com.huawei.hms.ads.banner.BannerView;
 import com.kevinnt.kraepelinmobile.models.GameSets;
 
 import java.io.IOException;
@@ -40,6 +46,33 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setAnswerButton();
         mediaPlayer = MainActivity.getMediaPlayer();
         mediaPlayer.start();
+
+        //ADS
+        HwAds.init(this);
+
+        // Obtain BannerView based on the configuration in layout/ad_fragment.xml.
+        BannerView bottomBannerView = findViewById(R.id.hw_banner_view);
+        AdParam adParam = new AdParam.Builder().build();
+        bottomBannerView.loadAd(adParam);
+
+        // Call new BannerView(Context context) to create a BannerView class.
+        BannerView topBannerView = new BannerView(this);
+        topBannerView.setAdId("testw6vs28auh3");
+        topBannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_360_144);
+        topBannerView.setBannerRefresh(60);
+        topBannerView.loadAd(adParam);
+
+        ConstraintLayout rootView = findViewById(R.id.root_view);
+        rootView.addView(topBannerView);
+
+        // Obtain BannerView.
+//        BannerView bannerView = findViewById(R.id.hw_banner_view);
+//        // Set the ad unit ID and ad dimensions. "testw6vs28auh3" is a dedicated test ad unit ID.
+//        bannerView.setAdId("testw6vs28auh3");
+//        bannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_SMART);
+//        // Set the refresh interval to 60 seconds.
+//        // Create an ad request to load an ad.
+//        bannerView.loadAd(adParam);
     }
 
     @Override
