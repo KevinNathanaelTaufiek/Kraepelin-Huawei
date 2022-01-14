@@ -56,14 +56,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         bottomBannerView.loadAd(adParam);
 
         // Call new BannerView(Context context) to create a BannerView class.
-        BannerView topBannerView = new BannerView(this);
-        topBannerView.setAdId("testw6vs28auh3");
-        topBannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_360_144);
-        topBannerView.setBannerRefresh(60);
-        topBannerView.loadAd(adParam);
+//        BannerView topBannerView = new BannerView(this);
+//        topBannerView.setAdId("testw6vs28auh3");
+//        topBannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_360_144);
+//        topBannerView.setBannerRefresh(60);
+//        topBannerView.loadAd(adParam);
 
-        ConstraintLayout rootView = findViewById(R.id.root_view);
-        rootView.addView(topBannerView);
+//        ConstraintLayout rootView = findViewById(R.id.root_view);
+//        rootView.addView(topBannerView);
 
         // Obtain BannerView.
 //        BannerView bannerView = findViewById(R.id.hw_banner_view);
