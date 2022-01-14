@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.ads.jsb.constant.Constant;
 import com.huawei.hms.common.ApiException;
 import com.huawei.hms.support.account.AccountAuthManager;
 import com.huawei.hms.support.account.request.AccountAuthParams;
@@ -29,6 +30,7 @@ import com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton;
 import com.kevinnt.kraepelinmobile.menus.HighScoreFragment;
 import com.kevinnt.kraepelinmobile.menus.MainFragment;
 import com.kevinnt.kraepelinmobile.models.GameSets;
+import com.kevinnt.kraepelinmobile.models.User;
 
 import java.io.IOException;
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private final String HW_USERNAME = "USERNAME";
     private ProgressBar progressBar;
+    private AccountAuthService mAuthManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                signIn();
                 silentSignInByHwId();
 
             }
@@ -96,28 +99,35 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 signOut();
+//                cancelAuthorization();
                 tvName.setText("Hi, Guest!");
                 btnLogout.setVisibility(View.GONE);
                 btnLogin.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
             }
         });
-        silentSignInByHwId();
-        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
-        tvName.setText(username);
-//        findViewById(R.id.HuaweiIdCancelAuthButton).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cancelAuthorization();
-//            }
-//        });
+        if(User.getInstance().getAuthAccount() == null){
+            tvName.setText("Hi, Guest!");
+            silentSignInByHwId();
+        }else{
+            tvName.setText(User.getInstance().getAuthAccount().getDisplayName());
+        }
+
+//        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
-        tvName.setText(username);
+//        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
+//        tvName.setText(username);
+        if(User.getInstance().getAuthAccount() == null){
+            tvName.setText("Hi, Guest!");
+            silentSignInByHwId();
+        }else{
+            tvName.setText(User.getInstance().getAuthAccount().getDisplayName());
+        }
         progressBar.setVisibility(View.GONE);
     }
 
@@ -136,8 +146,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mediaPlayer.start();
-        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
-        tvName.setText(username);
+        if(User.getInstance().getAuthAccount() == null){
+            tvName.setText("Hi, Guest!");
+            silentSignInByHwId();
+        }else{
+            tvName.setText(User.getInstance().getAuthAccount().getDisplayName());
+        }
+//        String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
+//        tvName.setText(username);
     }
 
     @Override
@@ -173,6 +189,16 @@ public class MainActivity extends AppCompatActivity {
      * After a successful silent sign-in, the HUAWEI ID information will be returned in the success event listener.
      * If the user has not authorized your app or signed in, the silent sign-in will fail. In this case, your app will show the authorization or sign-in screen to the user.
      */
+
+    private void signIn() {
+        mAuthParam = new AccountAuthParamsHelper(AccountAuthParams.DEFAULT_AUTH_REQUEST_PARAM)
+                .setIdToken()
+                .setAccessToken()
+                .createParams();
+        mAuthManager = AccountAuthManager.getService(MainActivity.this, mAuthParam);
+        startActivityForResult(mAuthManager.getSignInIntent(), 1002);
+    }
+
     private void silentSignInByHwId() {
         progressBar.setVisibility(View.VISIBLE);
         // 1. Use AccountAuthParams to specify the user information to be obtained, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).
@@ -184,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Use AccountAuthParams to build AccountAuthService.
         mAuthService = AccountAuthManager.getService(this, mAuthParam);
+        User.getInstance().setAuthService(mAuthService);
 
         // Use silent sign-in to sign in with a HUAWEI ID.
         Task<AuthAccount> task = mAuthService.silentSignIn();
@@ -224,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
      * @param authAccount AuthAccount object, which contains the HUAWEI ID information.
      */
     private void dealWithResultOfSignIn(AuthAccount authAccount) {
+        User.getInstance().setAuthAccount(authAccount);
+
         Log.i(TAG, "display name:" + authAccount.getDisplayName());
         Log.i(TAG, "photo uri string:" + authAccount.getAvatarUriString());
         Log.i(TAG, "photo uri:" + authAccount.getAvatarUri());
@@ -261,18 +290,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut() {
-        Task<Void> signOutTask = mAuthService.signOut();
-        signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.i(TAG, "signOut Success");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception e) {
-                Log.i(TAG, "signOut fail");
-            }
-        });
+        mAuthService = User.getInstance().getAuthService();
+        if(mAuthService != null) {
+            Task<Void> signOutTask = mAuthService.signOut();
+            signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.i(TAG, "signOut Success");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(Exception e) {
+                    Log.i(TAG, "signOut fail");
+                }
+            });
+        }
     }
 
     private void cancelAuthorization() {
