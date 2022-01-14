@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.huawei.hmf.tasks.OnFailureListener;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static MediaPlayer mediaPlayer;
     private SharedPreferences sharedPreferences;
     private final String HW_USERNAME = "USERNAME";
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(fl_container.getId(), new MainFragment(this)).commit();
 
+        progressBar = findViewById(R.id.progress_bar);
         tvName = findViewById(R.id.tv_name);
         btnLogin = findViewById(R.id.HuaweiIdAuthButton);
         btnLogout = findViewById(R.id.HuaweiIdSignOutButton);
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 silentSignInByHwId();
 
             }
@@ -90,10 +94,12 @@ public class MainActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 signOut();
                 tvName.setText("Hi, Guest!");
                 btnLogout.setVisibility(View.GONE);
                 btnLogin.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
         silentSignInByHwId();
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         String username = sharedPreferences.getString(HW_USERNAME,"Hi, Guest!");
         tvName.setText(username);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void clickBtn(){
@@ -167,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
      * If the user has not authorized your app or signed in, the silent sign-in will fail. In this case, your app will show the authorization or sign-in screen to the user.
      */
     private void silentSignInByHwId() {
+        progressBar.setVisibility(View.VISIBLE);
         // 1. Use AccountAuthParams to specify the user information to be obtained, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).
         // 2. By default, DEFAULT_AUTH_REQUEST_PARAM specifies two items to be obtained, that is, the user ID and profile.
         // 3. If your app needs to obtain the user's email address, call setEmail().
@@ -190,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 spEditor.putString(HW_USERNAME,authAccount.getDisplayName());
                 spEditor.apply();
                 dealWithResultOfSignIn(authAccount);
+                progressBar.setVisibility(View.GONE);
             }
         });
         task.addOnFailureListener(new OnFailureListener() {
@@ -241,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor spEditor = sharedPreferences.edit();
                 spEditor.putString(HW_USERNAME,authAccount.getDisplayName());
                 spEditor.apply();
+                progressBar.setVisibility(View.GONE);
 
                 Log.i(TAG, "onActivitResult of sigInInIntent, request code: " + REQUEST_CODE_SIGN_IN);
             } else {
