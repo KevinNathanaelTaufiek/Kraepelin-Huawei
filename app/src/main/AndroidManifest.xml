@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.kevinnt.kraepelinmobile">
+<manifest xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android" tools:node="merge" package="com.kevinnt.kraepelinmobile">
     <queries>
         <intent>
             <action android:name="com.huawei.hms.core.aidlservice" />
@@ -16,5 +16,7 @@
         <activity android:name=".GameActivity" />
         <meta-data android:name="com.huawei.hms.client.channel.androidMarket" android:value="false" />
     </application>
+    <uses-sdk tools:overrideLibrary="com.huawei.agconnect.credential,com.huawei.agconnect.core,com.huawei.agconnect.https,com.huawei.agconnect.datastore" />
+    <meta-data android:name="install_channel" android:value="AppGallery" />
 </manifest>
 

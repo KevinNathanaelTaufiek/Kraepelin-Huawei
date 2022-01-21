@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -19,6 +20,12 @@ import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.ads.jsb.constant.Constant;
+import com.huawei.hms.analytics.HiAnalytics;
+import com.huawei.hms.analytics.HiAnalyticsInstance;
+import com.huawei.hms.analytics.HiAnalyticsTools;
+import com.huawei.hms.analytics.type.HAEventType;
+import com.huawei.hms.analytics.type.HAParamType;
+import com.huawei.hms.analytics.type.ReportPolicy;
 import com.huawei.hms.common.ApiException;
 import com.huawei.hms.support.account.AccountAuthManager;
 import com.huawei.hms.support.account.request.AccountAuthParams;
@@ -33,6 +40,8 @@ import com.kevinnt.kraepelinmobile.models.GameSets;
 import com.kevinnt.kraepelinmobile.models.User;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +61,49 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Analytic
+        // Enable SDK log recording.
+        HiAnalyticsTools.enableLog();
+        HiAnalyticsInstance instance = HiAnalytics.getInstance(MainActivity.this);
+
+        instance.setUserProfile("userKey","value");
+
+        ReportPolicy launchAppPolicy = ReportPolicy.ON_APP_LAUNCH_POLICY;
+        ReportPolicy moveBackgroundPolicy = ReportPolicy.ON_MOVE_BACKGROUND_POLICY;
+        ReportPolicy scheduledTimePolicy = ReportPolicy.ON_SCHEDULED_TIME_POLICY;
+        scheduledTimePolicy.setThreshold(600);
+        ReportPolicy cacheThresholdPolicy = ReportPolicy.ON_CACHE_THRESHOLD_POLICY;
+        cacheThresholdPolicy.setThreshold(100);
+        Set<ReportPolicy> reportPolicies = new HashSet<>();
+        reportPolicies.add(launchAppPolicy);
+        reportPolicies.add(moveBackgroundPolicy);
+        reportPolicies.add(scheduledTimePolicy);
+        reportPolicies.add(cacheThresholdPolicy);
+        instance.setReportPolicies(reportPolicies);
+
+
+        // Enable tracking of the custom event in proper positions of the code.
+        Bundle bundle = new Bundle();
+        bundle.putString("exam_difficulty", "high");
+        bundle.putString("exam_level", "1-1");
+        bundle.putString("exam_time", "20190520-08");
+        instance.onEvent("begin_examination", bundle);
+
+        //LOGGING
+        Bundle bundle_pre = new Bundle();
+        bundle_pre.putString(HAParamType.PRODUCTID, "item_ID");
+        bundle_pre.putString(HAParamType.PRODUCTNAME, "name");
+        bundle_pre.putString(HAParamType.CATEGORY, "category");
+        bundle_pre.putLong(HAParamType.QUANTITY, 100L);
+        bundle_pre.putDouble(HAParamType.PRICE, 10.01);
+        bundle_pre.putDouble(HAParamType.REVENUE, 10);
+        bundle_pre.putString(HAParamType.CURRNAME, "currency");
+        bundle_pre.putString(HAParamType.PLACEID, "location_ID");
+        instance.onEvent(HAEventType.ADDPRODUCT2WISHLIST, bundle_pre);
+
+
+
 
         fl_container = findViewById(R.id.fl_container);
         btn_high_score = findViewById(R.id.btn_high_score);
